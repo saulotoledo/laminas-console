@@ -50,7 +50,7 @@ final class Password extends AbstractPrompt
          */
         while (true) {
             $char = $console->readChar();
-
+            var_dump( $char);
             $console->clearLine();
 
             if (PHP_EOL == $char) {

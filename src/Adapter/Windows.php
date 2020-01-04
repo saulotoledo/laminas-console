@@ -263,20 +263,18 @@ class Windows extends Virtual
         if ($mask === null) {
             exec(
                 'powershell -NonInteractive -NoProfile -NoLogo -OutputFormat Text -Command "'
-                . 'while ($Host.UI.RawUI.KeyAvailable) {$key = $Host.UI.RawUI.ReadKey(\'NoEcho,IncludeKeyDown\');}'
-                . 'write $key.VirtualKeyCode;'
-                . '"',
+                . 'write $Host.UI.RawUI.ReadKey(\'NoEcho,IncludeKeyDown\').VirtualKeyCode;"',
                 $result,
                 $return
             );
-
+            
             // Retrieve char from the result.
             $char = ! empty($result) ? implode('', $result) : null;
 
             if (! empty($char) && ! $return) {
                 // We have obtained an ASCII code, convert back to a char ...
-                $char = chr($char);
-
+                $char = intval($char) == 13 ? PHP_EOL : chr($char);
+                var_dump($char);
                 // ... and return it...
                 return $char;
             }
